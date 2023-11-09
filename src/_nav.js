@@ -26,6 +26,12 @@ const _nav = [
     to: "/management/manage-job-titles",
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: "Scientific Degree",
+    to: "/management/scientific-degree",
+    icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
+  },
 ];
 
 export default _nav;

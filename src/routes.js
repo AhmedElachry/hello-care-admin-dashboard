@@ -13,6 +13,9 @@ const EditJobTitlePage = React.lazy(() =>
     "./views/management/job-titles/manage-job-titles/edit-job-titles/EditJobTitlePage"
   )
 );
+const ScientificDegree = React.lazy(() =>
+  import("./views/management/ScientificDegree/ScientificDegree")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -38,6 +41,11 @@ const routes = [
     path: "/management/edit-job-title/:jobTitleId",
     name: "Edit Job Title Form",
     element: EditJobTitlePage,
+  },
+  {
+    path: "/management/scientific-degree",
+    name: "Scientific Degree",
+    element: ScientificDegree,
   },
 ];
 

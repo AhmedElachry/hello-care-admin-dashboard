@@ -4,12 +4,12 @@ import CIcon from "@coreui/icons-react";
 import { useDeleteJobTitleMutation } from "../../../../../app/api/dataApiSlice";
 import { useNavigate } from "react-router-dom";
 
-function TableActions({ jobTitle }) {
+function TableActions({ itemId, route }) {
   const navigate = useNavigate();
-  const [deleteJobTitle] = useDeleteJobTitleMutation();
+  // const [deleteJobTitle] = useDeleteJobTitleMutation();
 
-  const handleDeleteJobTitle = (jobId) => {
-    deleteJobTitle(jobId);
+  const handleDeleteItem = (itemId) => {
+    deleteItem(jobId);
   };
 
   return (
@@ -17,16 +17,16 @@ function TableActions({ jobTitle }) {
       <CIcon
         style={{ cursor: "pointer" }}
         icon={cilPen}
-        title="edit this job title"
+        title="edit"
         size="lg"
-        onClick={() => navigate(`/management/edit-job-title/${jobTitle.id}`)}
+        onClick={() => navigate(`/management/${route}/${itemId}`)}
       />
       <CIcon
         style={{ cursor: "pointer" }}
         icon={cilTrash}
-        title="delete this job title"
+        title="delete"
         size="lg"
-        onClick={() => handleDeleteJobTitle({ id: jobTitle.id })}
+        onClick={() => handleDeleteItem({ itemId })}
       />
     </div>
   );

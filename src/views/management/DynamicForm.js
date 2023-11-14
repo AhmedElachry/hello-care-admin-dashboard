@@ -11,10 +11,12 @@ import {
 function DynamicForm({
   formFields,
   formData,
-  isFormValid,
+  // isFormValid,
   handleFieldChange,
   handleSubmit,
 }) {
+  const isFormValid = Object.values(formData).every(Boolean);
+
   return (
     <CForm onSubmit={handleSubmit}>
       <CRow>

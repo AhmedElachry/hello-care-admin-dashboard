@@ -12,7 +12,7 @@ function getHeaders() {
 }
 
 const ScientificDegreeApiSlice = createApi({
-  reducerPath: "api",
+  reducerPath: "scientificDegree",
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers) => {

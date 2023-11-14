@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import DynamicForm from "../DynamicForm";
-import { useState } from "react";
-import {
-  useAddScientificDegreeMutation,
-  useGetScientificDegreesQuery,
-} from "../../../app/api/ScientificDegreeApiSlice";
 import DynamicTable from "../DynamicTable";
+import {
+  useGetScientificTitlesQuery,
+  useAddScientificTitleMutation,
+  useUpdateScientificTitleMutation,
+  useDeleteScientificTitleMutation,
+} from "../../../app/api/scientificTitleApiSlice";
+// import { useGetScientificTitlesQuery } from "../../../app/api/ScientificTitleApiSlice";
 
-function ScientificDegree() {
+function ScientificTitle() {
   const [formData, setFormData] = useState({
     name: "",
   });
-  const [addScientificDegree] = useAddScientificDegreeMutation();
-  const { data: data, isSuccess } = useGetScientificDegreesQuery();
+  const { data: data, isSuccess } = useGetScientificTitlesQuery();
+  const formFields = [{ label: "Name", name: "name", type: "text" }];
 
   const handleFieldChange = (fieldName, value) => {
     setFormData({
@@ -20,14 +22,12 @@ function ScientificDegree() {
       [fieldName]: value,
     });
   };
-
-  const formFields = [{ label: "Name", name: "name", type: "text" }];
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    addScientificDegree(formData);
+    // addScientificDegree(formData);
     console.log(formData);
   };
+
   let tableData = [];
   // let columns = [];
 
@@ -35,7 +35,6 @@ function ScientificDegree() {
     // console.log(data.data);
     tableData = data.data.slice();
   }
-
   return (
     <div>
       <DynamicForm
@@ -45,9 +44,9 @@ function ScientificDegree() {
         // isFormValid={formData}
         handleSubmit={handleSubmit}
       />
-      <DynamicTable tableData={tableData} mutable={true} />
+      <DynamicTable tableData={tableData} />
     </div>
   );
 }
 
-export default ScientificDegree;
+export default ScientificTitle;

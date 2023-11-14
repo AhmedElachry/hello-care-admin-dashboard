@@ -1,15 +1,13 @@
 import { cilPen, cilTrash } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 
-import { useDeleteJobTitleMutation } from "../../../../../app/api/dataApiSlice";
 import { useNavigate } from "react-router-dom";
 
-function TableActions({ itemId, route }) {
+function TableActions({ id, route, deleteItemHook }) {
   const navigate = useNavigate();
-  // const [deleteJobTitle] = useDeleteJobTitleMutation();
 
-  const handleDeleteItem = (itemId) => {
-    deleteItem(jobId);
+  const handleDeleteItem = (id) => {
+    deleteItemHook(id);
   };
 
   return (
@@ -26,7 +24,7 @@ function TableActions({ itemId, route }) {
         icon={cilTrash}
         title="delete"
         size="lg"
-        onClick={() => handleDeleteItem({ itemId })}
+        onClick={() => handleDeleteItem({ id })}
       />
     </div>
   );

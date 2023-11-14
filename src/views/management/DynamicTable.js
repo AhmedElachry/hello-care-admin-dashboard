@@ -1,7 +1,15 @@
 import { CTable, CTableCaption } from "@coreui/react";
 import TableActions from "./job-titles/manage-job-titles/job-titles-table/TableActions";
 
-function DynamicTable({ tableData, tableCaption, mutable }) {
+function DynamicTable({
+  tableData,
+  tableCaption,
+  mutable,
+  itemId,
+  route,
+  deleteItemHook,
+  editItemHook,
+}) {
   // Extract unique keys from the data
   const allKeys = tableData.reduce((keys, item) => {
     Object.keys(item).forEach((key) => {
@@ -34,14 +42,21 @@ function DynamicTable({ tableData, tableCaption, mutable }) {
     columns.forEach((column) => {
       tableItem[column.key] = item[column.key];
       if (mutable) {
-        tableItem.actions = <TableActions itemId={item.id} />;
+        tableItem.actions = (
+          <TableActions
+            id={item.id}
+            deleteItemHook={deleteItemHook}
+            editItemHook={editItemHook}
+            route={route}
+          />
+        );
       }
     });
     return tableItem;
   });
-  console.log("table items", tableItems);
-  console.log("table data", tableData);
-  console.log("columns", columns);
+  // console.log("table items", tableItems);
+  // console.log("table data", tableData);
+  // console.log("columns", columns);
   return (
     <CTable
       bordered

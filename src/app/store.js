@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import sidebarReducer from "../features/sidebarSlice/sidebarSlice";
-import apiSlice from "./api/dataApiSlice";
+// import apiSlice from "./api/dataApiSlice";
 import authReducer from "../features/auth/authSlice";
 import { authApi } from "./api/authApiSlice";
 import ScientificDegreeApiSlice from "./api/ScientificDegreeApiSlice";
@@ -21,7 +21,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(apiSlice.middleware)
+      // .concat(apiSlice.middleware)
       .concat(scientificTitleApiSlice.middleware)
       .concat(visitsApiSlice.middleware)
       .concat(ScientificDegreeApiSlice.middleware)

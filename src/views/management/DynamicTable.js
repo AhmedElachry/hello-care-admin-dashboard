@@ -5,12 +5,9 @@ function DynamicTable({
   tableData,
   tableCaption,
   mutable,
-  itemId,
-  route,
+  editRoute,
   deleteItemHook,
-  editItemHook,
 }) {
-  // Extract unique keys from the data
   const allKeys = tableData.reduce((keys, item) => {
     Object.keys(item).forEach((key) => {
       if (!keys.includes(key)) {
@@ -19,8 +16,6 @@ function DynamicTable({
     });
     return keys;
   }, []);
-
-  // Generate dynamic columns based on the keys
 
   const columns = allKeys
     .filter((key) => key !== "id")
@@ -46,17 +41,13 @@ function DynamicTable({
           <TableActions
             id={item.id}
             deleteItemHook={deleteItemHook}
-            editItemHook={editItemHook}
-            route={route}
+            editRoute={editRoute}
           />
         );
       }
     });
     return tableItem;
   });
-  // console.log("table items", tableItems);
-  // console.log("table data", tableData);
-  // console.log("columns", columns);
   return (
     <CTable
       bordered

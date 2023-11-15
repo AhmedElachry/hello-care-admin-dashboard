@@ -29,7 +29,7 @@ const _nav = [
   {
     component: CNavItem,
     name: "Scientific Degree",
-    to: "/management/scientific-degree",
+    to: "/management/scientific-degrees",
     icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
   },
   {

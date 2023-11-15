@@ -24,15 +24,12 @@ function ScientificTitle() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // addScientificDegree(formData);
     console.log(formData);
   };
 
   let tableData = [];
-  // let columns = [];
 
   if (isSuccess) {
-    // console.log(data.data);
     tableData = data.data.slice();
   }
   return (
@@ -41,7 +38,6 @@ function ScientificTitle() {
         formFields={formFields}
         formData={formData}
         handleFieldChange={handleFieldChange}
-        // isFormValid={formData}
         handleSubmit={handleSubmit}
       />
       <DynamicTable tableData={tableData} />

@@ -50,8 +50,8 @@ const routes = [
     element: EditJobTitlePage,
   },
   {
-    path: "/management/scientific-degree",
-    name: "Scientific Degree",
+    path: "/management/scientific-degrees",
+    name: "Scientific Degrees",
     element: ScientificDegree,
   },
   {
@@ -60,7 +60,7 @@ const routes = [
     element: EditSDPage,
   },
   {
-    path: "/management/edit-scientific-degree/:sdId",
+    path: "/management/edit-scientific-degree/:id",
     name: "edit Scientific Degree",
     element: EditSDPage,
   },

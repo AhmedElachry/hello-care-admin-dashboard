@@ -5,7 +5,6 @@ import {
   useAddScientificDegreeMutation,
   useGetScientificDegreesQuery,
   useDeleteScientificDegreeMutation,
-  useUpdateScientificDegreeMutation,
 } from "../../../app/api/ScientificDegreeApiSlice";
 import DynamicTable from "../DynamicTable";
 
@@ -16,7 +15,6 @@ function ScientificDegree() {
   const [addScientificDegree] = useAddScientificDegreeMutation();
   const { data: data, isSuccess } = useGetScientificDegreesQuery();
   const [deleteScientificDegree] = useDeleteScientificDegreeMutation();
-  const [UpdateScientificDegree] = useUpdateScientificDegreeMutation();
 
   const handleFieldChange = (fieldName, value) => {
     setFormData({
@@ -49,9 +47,8 @@ function ScientificDegree() {
       <DynamicTable
         tableData={tableData}
         mutable={true}
-        route={"edit-scientific-degree"}
+        editRoute={"edit-scientific-degree"}
         deleteItemHook={deleteScientificDegree}
-        editItemHook={UpdateScientificDegree}
       />
     </div>
   );

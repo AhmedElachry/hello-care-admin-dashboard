@@ -3,13 +3,12 @@ import CIcon from "@coreui/icons-react";
 
 import { useNavigate } from "react-router-dom";
 
-function TableActions({ id, route, deleteItemHook }) {
+function TableActions({ id, editRoute, deleteItemHook }) {
   const navigate = useNavigate();
 
   const handleDeleteItem = (id) => {
     deleteItemHook(id);
   };
-
   return (
     <div className="d-flex justify-content-around">
       <CIcon
@@ -17,7 +16,7 @@ function TableActions({ id, route, deleteItemHook }) {
         icon={cilPen}
         title="edit"
         size="lg"
-        onClick={() => navigate(`/management/${route}/${itemId}`)}
+        onClick={() => navigate(`/management/${editRoute}/${id}`)}
       />
       <CIcon
         style={{ cursor: "pointer" }}

@@ -4,6 +4,7 @@ import {
   useUpdateScientificDegreeMutation,
 } from "../../../app/api/ScientificDegreeApiSlice";
 import { useNavigate, useParams } from "react-router-dom";
+// import { useUpdateScientificDegreeMutation } from "../../../app/api/ScientificDegreeApiSlice";
 import {
   CForm,
   CFormInput,
@@ -16,7 +17,7 @@ import {
 function EditSDPage() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
-  const { sdId } = useParams();
+  const { id } = useParams();
   const {
     data: jobTitles,
     isLoading,
@@ -29,6 +30,13 @@ function EditSDPage() {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+  };
+  const updatedSD = {
+    id,
+    name,
+  };
+  const handleUpdateJobTitle = () => {
+    updateSD(updatedSD);
   };
 
   return (
@@ -48,7 +56,7 @@ function EditSDPage() {
               color="success"
               className=" align-self-end mt-md-4 mt-4"
               size="lg"
-              //   onClick={handleUpdateJobTitle}
+              onClick={handleUpdateJobTitle}
               disabled={!isFormValid}
             >
               Edit Done

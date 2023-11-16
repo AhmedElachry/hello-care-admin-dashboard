@@ -11,7 +11,6 @@ import {
 function DynamicForm({
   formFields,
   formData,
-  // isFormValid,
   handleFieldChange,
   handleSubmit,
 }) {

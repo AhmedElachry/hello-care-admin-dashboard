@@ -4,7 +4,6 @@ import {
   useUpdateScientificDegreeMutation,
 } from "../../../app/api/ScientificDegreeApiSlice";
 import { useNavigate, useParams } from "react-router-dom";
-// import { useUpdateScientificDegreeMutation } from "../../../app/api/ScientificDegreeApiSlice";
 import {
   CForm,
   CFormInput,
@@ -13,6 +12,7 @@ import {
   CCol,
   CButton,
 } from "@coreui/react";
+import SDForm from "./SDForm";
 
 function EditSDPage() {
   const [name, setName] = useState("");
@@ -35,36 +35,37 @@ function EditSDPage() {
     id,
     name,
   };
-  const handleUpdateJobTitle = () => {
+  const handleUpdateSD = (updatedSD) => {
     updateSD(updatedSD);
   };
 
   return (
-    <div>
-      <CForm onSubmit={(e) => e.preventDefault()}>
-        <CRow>
-          <CCol xs="12" sm="4">
-            <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
-            <CFormInput type="text" value={name} onChange={handleNameChange} />
-          </CCol>
-          <CCol xs="12" sm="4" className="d-grid">
-            <CButton
-              style={{
-                color: "white",
-                lineHeight: "100%",
-              }}
-              color="success"
-              className=" align-self-end mt-md-4 mt-4"
-              size="lg"
-              onClick={handleUpdateJobTitle}
-              disabled={!isFormValid}
-            >
-              Edit Done
-            </CButton>
-          </CCol>
-        </CRow>
-      </CForm>
-    </div>
+    // <div>
+    //   <CForm onSubmit={(e) => e.preventDefault()}>
+    //     <CRow>
+    //       <CCol xs="12" sm="4">
+    //         <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+    //         <CFormInput type="text" value={name} onChange={handleNameChange} />
+    //       </CCol>
+    //       <CCol xs="12" sm="4" className="d-grid">
+    //         <CButton
+    //           style={{
+    //             color: "white",
+    //             lineHeight: "100%",
+    //           }}
+    //           color="success"
+    //           className=" align-self-end mt-md-4 mt-4"
+    //           size="lg"
+    //           onClick={handleUpdateSD}
+    //           disabled={!isFormValid}
+    //         >
+    //           Edit Done
+    //         </CButton>
+    //       </CCol>
+    //     </CRow>
+    //   </CForm>
+    // </div>
+    <SDForm handleSubmit={handleUpdateSD} />
   );
 }
 

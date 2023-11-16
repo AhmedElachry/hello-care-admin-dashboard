@@ -1,13 +1,14 @@
 import React from "react";
 import DynamicTable from "../DynamicTable";
 import { useGetVisitsQuery } from "../../../app/api/VisitsApiSlice";
+import Loading from "../Loading";
 
 function Visits() {
   const { data: data, isSuccess, isLoading } = useGetVisitsQuery();
   let content;
   let tableData = [];
   if (isLoading) {
-    content = <>Loading.......................</>;
+    content = <Loading />;
   }
   if (isSuccess) {
     tableData = data.data;

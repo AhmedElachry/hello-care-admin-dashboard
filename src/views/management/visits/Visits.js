@@ -17,7 +17,7 @@ function Visits() {
         <DynamicTable
           tableData={tableData}
           mutable={true}
-          tableCaption={"our Avialable visits"}
+          tableCaption={"Visits"}
         />
       </div>
     );

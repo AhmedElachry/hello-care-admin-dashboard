@@ -1,22 +1,24 @@
 import React from "react";
-import DynamicForm from "../DynamicForm";
+// import DynamicForm from "../DynamicForm";
 import { useState } from "react";
+import { CButton, CCollapse } from "@coreui/react";
 import {
   useGetScientificDegreesQuery,
   useDeleteScientificDegreeMutation,
-  useAddScientificDegreeMutation,
 } from "../../../app/api/ScientificDegreeApiSlice";
 import DynamicTable from "../DynamicTable";
-import SDForm from "./SDForm";
+import SDForm from "./AddSDForm";
 import Loading from "../Loading";
 import Error from "../Error";
 
 function ScientificDegree() {
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  // });
-  const [addScientificDegree] = useAddScientificDegreeMutation();
-  const [deleteScientificDegree] = useDeleteScientificDegreeMutation();
+  const [name, setName] = useState("");
+  const [visible, setVisible] = useState(false);
+
+  const [
+    deleteScientificDegree,
+    { isSuccess: isDelSuccess, isError: isDelError, isLoading: isDelLoading },
+  ] = useDeleteScientificDegreeMutation();
   const {
     data: data,
     isSuccess,
@@ -24,33 +26,35 @@ function ScientificDegree() {
     isError,
   } = useGetScientificDegreesQuery();
 
-  // const handleFieldChange = (fieldName, value) => {
-  //   setFormData({
-  //     ...formData,
-  //     [fieldName]: value,
-  //   });
-  // };
-
-  // const formFields = [{ label: "Name", name: "name", type: "text" }];
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addScientificDegree(formData);
-    console.log(formData);
-  };
   let tableData = [];
   let content;
 
   if (isSuccess) {
     tableData = data.data.slice();
+    console.log(tableData);
     content = (
       <div>
-        <SDForm handleSubmit={handleSubmit} />
+        <CButton
+          color="success"
+          style={{ color: "white" }}
+          href="#"
+          onClick={(event) => {
+            event.preventDefault();
+            setVisible(!visible);
+          }}
+        >
+          Add New
+        </CButton>
+        <CCollapse visible={visible}>
+          <SDForm />
+        </CCollapse>
+
         <DynamicTable
           tableData={tableData}
           mutable={true}
           editRoute={"edit-scientific-degree"}
           deleteItemHook={deleteScientificDegree}
+          tableCaption={"ScientificDegree"}
         />
       </div>
     );

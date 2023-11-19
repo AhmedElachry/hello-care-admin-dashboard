@@ -28,7 +28,7 @@ function DynamicTable({
     columns.push({
       key: "actions",
       label: "Actions",
-      _props: { scope: "col" },
+      _props: { width: 100, scope: "col" },
     });
   }
 
@@ -50,6 +50,7 @@ function DynamicTable({
   });
   return (
     <CTable
+      responsive={true}
       bordered
       columns={columns}
       items={tableItems}

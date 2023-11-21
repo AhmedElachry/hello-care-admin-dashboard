@@ -1,17 +1,17 @@
 import DynamicTable from "../DynamicTable";
-import { useGetVisitsQuery } from "../../../app/api/VisitsApiSlice";
 import Loading from "../Loading";
 import Error from "../Error";
-
-function Visits() {
-  const { data: data, isSuccess, isLoading, isError } = useGetVisitsQuery();
+import { useGetSettingsQuery } from "../../../app/api/settingsApiSlice";
+function settings() {
+  const { data: data, isSuccess, isLoading, isError } = useGetSettingsQuery();
   let content;
   let tableData = [];
   if (isLoading) {
     content = <Loading />;
   } else if (isError) {
     content = <Error />;
-  } else if (isSuccess) {
+  }
+  if (isSuccess) {
     tableData = data.data;
     content = (
       <div>
@@ -19,8 +19,8 @@ function Visits() {
           tableData={tableData}
           mutable={true}
           removable={false}
-          tableCaption={"Visits"}
-          editRoute={"edit-visit"}
+          tableCaption={"Settings"}
+          editRoute={""}
         />
       </div>
     );
@@ -28,4 +28,4 @@ function Visits() {
   return content;
 }
 
-export default Visits;
+export default settings;

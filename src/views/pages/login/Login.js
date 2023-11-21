@@ -35,6 +35,7 @@ const Login = () => {
       .unwrap()
       .then((data) => {
         const token = data.token;
+        // console.log(data);
         dispatch(loginSuccess(data));
         dispatch(setToken(token));
         navigate("/", { replace: true });

@@ -1,5 +1,4 @@
 import React from "react";
-// import DynamicForm from "../DynamicForm";
 import { useState } from "react";
 import { CButton, CCollapse } from "@coreui/react";
 import {
@@ -7,17 +6,16 @@ import {
   useDeleteScientificDegreeMutation,
 } from "../../../app/api/ScientificDegreeApiSlice";
 import DynamicTable from "../DynamicTable";
-import SDForm from "./AddSDForm";
+import AddSDForm from "./AddSDForm";
 import Loading from "../Loading";
 import Error from "../Error";
 
 function ScientificDegree() {
-  const [name, setName] = useState("");
   const [visible, setVisible] = useState(false);
 
   const [
     deleteScientificDegree,
-    { isSuccess: isDelSuccess, isError: isDelError, isLoading: isDelLoading },
+    // { isSuccess: isDelSuccess, isError: isDelError, isLoading: isDelLoading },
   ] = useDeleteScientificDegreeMutation();
   const {
     data: data,
@@ -29,9 +27,10 @@ function ScientificDegree() {
   let tableData = [];
   let content;
 
-  if (isSuccess) {
+  if (isLoading) {
+    content = <Loading />;
+  } else if (isSuccess) {
     tableData = data.data.slice();
-    console.log(tableData);
     content = (
       <div>
         <CButton
@@ -46,7 +45,7 @@ function ScientificDegree() {
           Add New
         </CButton>
         <CCollapse visible={visible}>
-          <SDForm />
+          <AddSDForm />
         </CCollapse>
 
         <DynamicTable
@@ -55,15 +54,14 @@ function ScientificDegree() {
           editRoute={"edit-scientific-degree"}
           deleteItemHook={deleteScientificDegree}
           tableCaption={"ScientificDegree"}
+          removable={true}
         />
       </div>
     );
-  } else if (isLoading) {
-    content = <Loading />;
   } else if (isError) {
     content = <Error />;
   }
-  return <>{content}</>;
+  return content;
 }
 
 export default ScientificDegree;

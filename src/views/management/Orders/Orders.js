@@ -1,10 +1,10 @@
 import DynamicTable from "../DynamicTable";
-import { useGetVisitsQuery } from "../../../app/api/VisitsApiSlice";
 import Loading from "../Loading";
 import Error from "../Error";
+import { useGetOrdersQuery } from "../../../app/api/ordersApiSlice";
 
-function Visits() {
-  const { data: data, isSuccess, isLoading, isError } = useGetVisitsQuery();
+function Orders() {
+  const { data: data, isSuccess, isLoading, isError } = useGetOrdersQuery();
   let content;
   let tableData = [];
   if (isLoading) {
@@ -17,10 +17,10 @@ function Visits() {
       <div>
         <DynamicTable
           tableData={tableData}
-          mutable={true}
+          mutable={false}
           removable={false}
-          tableCaption={"Visits"}
-          editRoute={"edit-visit"}
+          tableCaption={"Orders"}
+          editRoute={""}
         />
       </div>
     );
@@ -28,4 +28,4 @@ function Visits() {
   return content;
 }
 
-export default Visits;
+export default Orders;

@@ -1,48 +1,108 @@
 import React, { useState } from "react";
-import DynamicForm from "../DynamicForm";
 import DynamicTable from "../DynamicTable";
+import {
+  CForm,
+  CFormInput,
+  CFormLabel,
+  CRow,
+  CCol,
+  CButton,
+  CCollapse,
+} from "@coreui/react";
 import {
   useGetScientificTitlesQuery,
   useAddScientificTitleMutation,
-  useUpdateScientificTitleMutation,
   useDeleteScientificTitleMutation,
 } from "../../../app/api/scientificTitleApiSlice";
-// import { useGetScientificTitlesQuery } from "../../../app/api/ScientificTitleApiSlice";
+import Loading from "../Loading";
+import Error from "../Error";
 
 function ScientificTitle() {
-  const [formData, setFormData] = useState({
-    name: "",
-  });
-  const { data: data, isSuccess } = useGetScientificTitlesQuery();
-  const formFields = [{ label: "Name", name: "name", type: "text" }];
+  const [name, setName] = useState("");
+  const [visible, setVisible] = useState(false);
+  const {
+    data: data,
+    isSuccess,
+    isError,
+    isLoading,
+  } = useGetScientificTitlesQuery();
+  const [deleteScientificTitle] = useDeleteScientificTitleMutation();
+  const [addST] = useAddScientificTitleMutation();
 
-  const handleFieldChange = (fieldName, value) => {
-    setFormData({
-      ...formData,
-      [fieldName]: value,
-    });
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    addST(formData);
   };
+  const isFormValid = Boolean(name);
 
   let tableData = [];
+  let content;
 
-  if (isSuccess) {
+  if (isLoading) {
+    content = <Loading />;
+  } else if (isSuccess) {
     tableData = data.data.slice();
+
+    content = (
+      <div>
+        <CButton
+          color="success"
+          style={{ color: "white" }}
+          href="#"
+          onClick={(event) => {
+            event.preventDefault();
+            setVisible(!visible);
+          }}
+        >
+          Add New
+        </CButton>
+        <CCollapse visible={visible}>
+          <CForm onSubmit={(e) => e.preventDefault()}>
+            <CRow>
+              <CCol xs="12" sm="4">
+                <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+                <CFormInput
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={handleNameChange}
+                />
+              </CCol>
+              <CCol xs="12" sm="4" className="d-grid">
+                <CButton
+                  style={{
+                    color: "white",
+                    lineHeight: "100%",
+                  }}
+                  color="success"
+                  className=" align-self-end mt-md-4 mt-4"
+                  size="lg"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid}
+                >
+                  Done
+                </CButton>
+              </CCol>
+            </CRow>
+          </CForm>
+        </CCollapse>
+        <DynamicTable
+          tableData={tableData}
+          mutable={true}
+          removable={true}
+          deleteItemHook={deleteScientificTitle}
+          editRoute={"edit-scientific-title"}
+          tableCaption={"ScientificTitles"}
+        />
+      </div>
+    );
+  } else if (isError) {
+    content = <Error />;
   }
-  return (
-    <div>
-      <DynamicForm
-        formFields={formFields}
-        formData={formData}
-        handleFieldChange={handleFieldChange}
-        handleSubmit={handleSubmit}
-      />
-      <DynamicTable tableData={tableData} />
-    </div>
-  );
+  return content;
 }
 
 export default ScientificTitle;

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import {
   useGetScientificDegreesQuery,
@@ -24,10 +23,7 @@ function SDForm() {
     isLoading,
     isError,
   } = useGetScientificDegreesQuery();
-  const [
-    addSDegree,
-    { isLoading: isAddLoading, isError: isAddError, isSuccess: isAddSuccess },
-  ] = useAddScientificDegreeMutation();
+  const [addSDegree] = useAddScientificDegreeMutation();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -77,7 +73,6 @@ function SDForm() {
   return (
     <div>
       <CForm onSubmit={(e) => e.preventDefault()}>
-        <ToastContainer />
         <CRow>
           <CCol xs="12" sm="4">
             <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>

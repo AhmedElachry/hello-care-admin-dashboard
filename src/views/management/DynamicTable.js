@@ -1,10 +1,12 @@
 import { CTable, CTableCaption } from "@coreui/react";
-import TableActions from "./job-titles/manage-job-titles/job-titles-table/TableActions";
+import TableActions from "./TableActions";
+import { ToastContainer } from "react-toastify";
 
 function DynamicTable({
   tableData,
   tableCaption,
   mutable,
+  removable,
   editRoute,
   deleteItemHook,
 }) {
@@ -36,9 +38,12 @@ function DynamicTable({
     const tableItem = {};
     columns.forEach((column) => {
       tableItem[column.key] = item[column.key];
+      // console.log(item.key);
       if (mutable) {
         tableItem.actions = (
           <TableActions
+            slug={item.key}
+            removable={removable}
             id={item.id}
             deleteItemHook={deleteItemHook}
             editRoute={editRoute}
@@ -49,16 +54,19 @@ function DynamicTable({
     return tableItem;
   });
   return (
-    <CTable
-      responsive={true}
-      bordered
-      columns={columns}
-      items={tableItems}
-      caption="top"
-      tableHeadProps={{ color: "dark" }}
-    >
-      <CTableCaption>{tableCaption}</CTableCaption>
-    </CTable>
+    <>
+      <ToastContainer />
+      <CTable
+        responsive={true}
+        bordered
+        columns={columns}
+        items={tableItems}
+        caption="top"
+        tableHeadProps={{ color: "dark" }}
+      >
+        <CTableCaption>{tableCaption}</CTableCaption>
+      </CTable>
+    </>
   );
 }
 

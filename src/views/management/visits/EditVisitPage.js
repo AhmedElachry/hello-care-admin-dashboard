@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  useGetScientificDegreesQuery,
-  useUpdateScientificDegreeMutation,
-} from "../../../app/api/ScientificDegreeApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -16,44 +12,49 @@ import {
 import NotFoundMessege from "../NotFoundMessege";
 import Loading from "../Loading";
 import Error from "../Error";
-
-function EditSDPage() {
-  const [name, setName] = useState("");
+import {
+  useGetVisitsQuery,
+  useUpdateVisitMutation,
+} from "../../../app/api/VisitsApiSlice";
+function EditVisitPage() {
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
-  const {
-    data: SDegrees,
-    isSuccess,
-    isLoading,
-    isError,
-  } = useGetScientificDegreesQuery();
+  const { data: visits, isSuccess, isLoading, isError } = useGetVisitsQuery();
+  const [updateVisit] = useUpdateVisitMutation();
 
-  let selectedSDToUpdate;
+  let selectedVisitToUpdate;
   if (isSuccess) {
-    const dataArr = SDegrees.data.slice();
-    selectedSDToUpdate = dataArr.find((item) => item.id == id);
+    const dataArr = visits.data.slice();
+    selectedVisitToUpdate = dataArr.find((item) => item.id == id);
   }
   useEffect(() => {
-    if (isSuccess && selectedSDToUpdate) {
-      setName(selectedSDToUpdate.name);
+    if (isSuccess && selectedVisitToUpdate) {
+      setMinPrice(selectedVisitToUpdate.min_price);
+      setMaxPrice(selectedVisitToUpdate.max_price);
     }
-  }, [isSuccess, selectedSDToUpdate]);
-  const [updateSD] = useUpdateScientificDegreeMutation();
+  }, [isSuccess, selectedVisitToUpdate]);
 
-  const isFormValid = [name].every(Boolean);
+  const isFormValid = [minPrice, maxPrice].every(Boolean);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleMinPriceChange = (e) => {
+    setMinPrice(e.target.value);
   };
-  let updatedSD = {
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(e.target.value);
+  };
+
+  let updatedVisit = {
     id,
-    name,
+    min_price: minPrice,
+    max_price: maxPrice,
   };
-  const handleUpdateSD = () => {
-    updateSD(updatedSD)
+  const handleUpdateST = () => {
+    console.log(updatedVisit);
+    updateVisit(updatedVisit)
       .unwrap()
       .then((payload) => {
-        console.log(payload);
         toast.success(payload.message, {
           position: "top-right",
           autoClose: 3000,
@@ -62,10 +63,10 @@ function EditSDPage() {
           progress: undefined,
           theme: "light",
         });
-        navigate("/management/scientific-degrees");
+        navigate("/management/visits");
       })
       .catch((error) => {
-        toast.error(error.message, {
+        toast.error(error.data.message, {
           position: "top-right",
           autoClose: 3000,
           closeOnClick: true,
@@ -78,23 +79,31 @@ function EditSDPage() {
 
   let content;
 
-  if (!selectedSDToUpdate) {
-    content = <NotFoundMessege />;
-  } else if (isLoading) {
+  if (isLoading) {
     content = <Loading />;
   } else if (isError) {
     content = <Error />;
-  } else if (isSuccess && selectedSDToUpdate) {
+  } else if (!selectedVisitToUpdate) {
+    content = <NotFoundMessege />;
+  } else if (isSuccess && selectedVisitToUpdate) {
     content = (
       <div>
         <CForm onSubmit={(e) => e.preventDefault()}>
           <CRow>
             <CCol xs="12" sm="4">
-              <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+              <CFormLabel style={{ fontSize: "1.4rem" }}>Min Price:</CFormLabel>
+              <CFormInput
+                type="integer"
+                value={minPrice}
+                onChange={handleMinPriceChange}
+              />
+            </CCol>
+            <CCol xs="12" sm="4">
+              <CFormLabel style={{ fontSize: "1.4rem" }}>Max Price:</CFormLabel>
               <CFormInput
                 type="text"
-                value={name}
-                onChange={handleNameChange}
+                value={maxPrice}
+                onChange={handleMaxPriceChange}
               />
             </CCol>
             <CCol xs="12" sm="4" className="d-grid">
@@ -106,7 +115,7 @@ function EditSDPage() {
                 color="success"
                 className=" align-self-end mt-md-4 mt-4"
                 size="lg"
-                onClick={handleUpdateSD}
+                onClick={handleUpdateST}
                 disabled={!isFormValid}
               >
                 Edit Done
@@ -119,5 +128,4 @@ function EditSDPage() {
   }
   return content;
 }
-
-export default EditSDPage;
+export default EditVisitPage;

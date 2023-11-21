@@ -1,12 +1,15 @@
+import React from "react";
 import DynamicTable from "../DynamicTable";
-import { useGetVisitsQuery } from "../../../app/api/VisitsApiSlice";
+import { useGetTimeoutsQuery } from "../../../app/api/timeOutApiSlice";
 import Loading from "../Loading";
 import Error from "../Error";
 
-function Visits() {
-  const { data: data, isSuccess, isLoading, isError } = useGetVisitsQuery();
+function Timeout() {
+  const { data: data, isSuccess, isLoading, isError } = useGetTimeoutsQuery();
+
   let content;
   let tableData = [];
+
   if (isLoading) {
     content = <Loading />;
   } else if (isError) {
@@ -19,8 +22,8 @@ function Visits() {
           tableData={tableData}
           mutable={true}
           removable={false}
-          tableCaption={"Visits"}
-          editRoute={"edit-visit"}
+          tableCaption={"Timeouts"}
+          editRoute={"edit-timeout"}
         />
       </div>
     );
@@ -28,4 +31,4 @@ function Visits() {
   return content;
 }
 
-export default Visits;
+export default Timeout;

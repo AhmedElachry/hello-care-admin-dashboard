@@ -16,19 +16,13 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: "Employees",
-    to: "/management/employees",
+    name: "Visits",
+    to: "/management/visits",
     icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: "Manage Job Titles",
-    to: "/management/manage-job-titles",
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: "Scientific Degree",
+    name: "Scientific Degrees",
     to: "/management/scientific-degrees",
     icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
   },
@@ -40,8 +34,32 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: "Visits",
-    to: "/management/visits",
+    name: "Timeouts",
+    to: "/management/timeouts",
+    icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Orders",
+    to: "/management/orders",
+    icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Settings",
+    to: "/management/settings",
+    icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Contact Us",
+    to: "/management/contact-us",
+    icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Statistics",
+    to: "/management/statistics",
     icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
   },
 ];

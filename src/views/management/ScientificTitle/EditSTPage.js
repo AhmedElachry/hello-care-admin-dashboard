@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  useGetScientificDegreesQuery,
-  useUpdateScientificDegreeMutation,
-} from "../../../app/api/ScientificDegreeApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -16,41 +12,45 @@ import {
 import NotFoundMessege from "../NotFoundMessege";
 import Loading from "../Loading";
 import Error from "../Error";
+import {
+  useGetScientificTitlesQuery,
+  useUpdateScientificTitleMutation,
+} from "../../../app/api/scientificTitleApiSlice";
 
 function EditSDPage() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const {
-    data: SDegrees,
+    data: STitles,
     isSuccess,
     isLoading,
     isError,
-  } = useGetScientificDegreesQuery();
+  } = useGetScientificTitlesQuery();
+  const [updateST] = useUpdateScientificTitleMutation();
 
-  let selectedSDToUpdate;
+  let selectedSTToUpdate;
   if (isSuccess) {
-    const dataArr = SDegrees.data.slice();
-    selectedSDToUpdate = dataArr.find((item) => item.id == id);
+    const dataArr = STitles.data.slice();
+    selectedSTToUpdate = dataArr.find((item) => item.id == id);
   }
   useEffect(() => {
-    if (isSuccess && selectedSDToUpdate) {
-      setName(selectedSDToUpdate.name);
+    if (isSuccess && selectedSTToUpdate) {
+      setName(selectedSTToUpdate.name);
     }
-  }, [isSuccess, selectedSDToUpdate]);
-  const [updateSD] = useUpdateScientificDegreeMutation();
+  }, [isSuccess, selectedSTToUpdate]);
 
   const isFormValid = [name].every(Boolean);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
-  let updatedSD = {
+  let updatedST = {
     id,
     name,
   };
-  const handleUpdateSD = () => {
-    updateSD(updatedSD)
+  const handleUpdateST = () => {
+    updateST(updatedST)
       .unwrap()
       .then((payload) => {
         console.log(payload);
@@ -62,7 +62,7 @@ function EditSDPage() {
           progress: undefined,
           theme: "light",
         });
-        navigate("/management/scientific-degrees");
+        navigate("/management/scientific-title");
       })
       .catch((error) => {
         toast.error(error.message, {
@@ -78,13 +78,13 @@ function EditSDPage() {
 
   let content;
 
-  if (!selectedSDToUpdate) {
+  if (!selectedSTToUpdate) {
     content = <NotFoundMessege />;
   } else if (isLoading) {
     content = <Loading />;
   } else if (isError) {
     content = <Error />;
-  } else if (isSuccess && selectedSDToUpdate) {
+  } else if (isSuccess && selectedSTToUpdate) {
     content = (
       <div>
         <CForm onSubmit={(e) => e.preventDefault()}>
@@ -106,7 +106,7 @@ function EditSDPage() {
                 color="success"
                 className=" align-self-end mt-md-4 mt-4"
                 size="lg"
-                onClick={handleUpdateSD}
+                onClick={handleUpdateST}
                 disabled={!isFormValid}
               >
                 Edit Done

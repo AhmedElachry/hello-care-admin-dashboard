@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
-function TableActions({ id, editRoute, deleteItemHook }) {
+function TableActions({ id, editRoute, deleteItemHook, removable }) {
   const navigate = useNavigate();
 
   const handleDeleteItem = (id) => {
@@ -40,13 +40,15 @@ function TableActions({ id, editRoute, deleteItemHook }) {
         size="lg"
         onClick={() => navigate(`/management/${editRoute}/${id}`)}
       />
-      <CIcon
-        style={{ cursor: "pointer" }}
-        icon={cilTrash}
-        title="delete"
-        size="lg"
-        onClick={() => handleDeleteItem({ id })}
-      />
+      {removable && (
+        <CIcon
+          style={{ cursor: "pointer" }}
+          icon={cilTrash}
+          title="delete"
+          size="lg"
+          onClick={() => handleDeleteItem({ id })}
+        />
+      )}
     </div>
   );
 }

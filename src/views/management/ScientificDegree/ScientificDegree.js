@@ -13,10 +13,7 @@ import Error from "../Error";
 function ScientificDegree() {
   const [visible, setVisible] = useState(false);
 
-  const [
-    deleteScientificDegree,
-    // { isSuccess: isDelSuccess, isError: isDelError, isLoading: isDelLoading },
-  ] = useDeleteScientificDegreeMutation();
+  const [deleteScientificDegree] = useDeleteScientificDegreeMutation();
   const {
     data: data,
     isSuccess,

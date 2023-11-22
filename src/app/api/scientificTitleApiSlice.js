@@ -7,7 +7,7 @@ const scientificTitleApiSlice = createApi({
   reducerPath: "scientificTitle",
   baseQuery: fetchBaseQuery({
     baseUrl,
-    prepareHeaders: (headers) => {
+    prepareHeaders: () => {
       return getHeaders();
     },
   }),

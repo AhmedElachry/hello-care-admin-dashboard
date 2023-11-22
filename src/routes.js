@@ -1,4 +1,5 @@
 import React from "react";
+// import BloodTypes from "./views/management/BloodTypes/BloodTypes";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 
@@ -37,6 +38,18 @@ const ContactUs = React.lazy(() =>
 
 const Statistics = React.lazy(() =>
   import("./views/management/Statistics/Statistics")
+);
+
+const RejectReasons = React.lazy(() =>
+  import("./views/management/RejectReasons/RejectReasons")
+);
+
+const EditRRPage = React.lazy(() =>
+  import("./views/management/RejectReasons/EditRRPage")
+);
+
+const BloodTypes = React.lazy(() =>
+  import("./views/management/BloodTypes/BloodTypes")
 );
 
 const routes = [
@@ -111,6 +124,21 @@ const routes = [
     path: "/management/statistics",
     name: "Statistics",
     element: Statistics,
+  },
+  {
+    path: "/management/reject-reasons",
+    name: "Reject Reasons",
+    element: RejectReasons,
+  },
+  {
+    path: "/management/edit-reject-reason/:id",
+    name: "edit Reject Reason",
+    element: EditRRPage,
+  },
+  {
+    path: "/management/blood-types",
+    name: "Blood Types",
+    element: BloodTypes,
   },
 ];
 

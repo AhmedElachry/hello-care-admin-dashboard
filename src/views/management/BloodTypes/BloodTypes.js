@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import DynamicTable from "../DynamicTable";
 import {
   CForm,
@@ -15,36 +15,36 @@ import Loading from "../Loading";
 import Error from "../Error";
 
 import {
-  useGetScientificTitlesQuery,
-  useAddScientificTitleMutation,
-  useDeleteScientificTitleMutation,
-} from "../../../app/api/scientificTitleApiSlice";
-
-function ScientificTitle() {
-  const [name, setName] = useState("");
+  useAddBloodTypeMutation,
+  useDeleteBloodTypeMutation,
+  useGetBloodTypesQuery,
+} from "../../../app/api/bloodTypesApiSlice";
+function BloodTypes() {
+  const [nameEn, setNameEn] = useState("");
+  const [nameAr, setNameAr] = useState("");
   const [visible, setVisible] = useState(false);
-  const {
-    data: data,
-    isSuccess,
-    isError,
-    isLoading,
-  } = useGetScientificTitlesQuery();
-  const [deleteScientificTitle] = useDeleteScientificTitleMutation();
-  const [addST] = useAddScientificTitleMutation();
+  const { data: data, isSuccess, isError, isLoading } = useGetBloodTypesQuery();
+  const [deleteBT] = useDeleteBloodTypeMutation();
+  const [addBT, { isLoading: isAddLoading }] = useAddBloodTypeMutation();
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleNameEnChange = (e) => {
+    setNameEn(e.target.value);
+  };
+  const handleNameArChange = (e) => {
+    setNameAr(e.target.value);
   };
 
   const handleSubmit = (e) => {
-    let newST = {
-      name,
-    };
+    let newBT = { name_en: nameEn, name_ar: nameAr };
     e.preventDefault();
-    addST(newST)
+    if (isAddLoading) {
+      toast.promise("adding BT is pending", {});
+    }
+    addBT(newBT)
       .unwrap()
       .then((payload) => {
-        setName("");
+        setNameEn("");
+        setNameAr("");
         toast.success(payload.message, {
           position: "top-right",
           autoClose: 3000,
@@ -66,7 +66,7 @@ function ScientificTitle() {
         });
       });
   };
-  const isFormValid = Boolean(name);
+  const isFormValid = Boolean(nameEn, nameAr);
 
   let tableData = [];
   let content;
@@ -93,12 +93,19 @@ function ScientificTitle() {
           <CForm onSubmit={(e) => e.preventDefault()}>
             <CRow>
               <CCol xs="12" sm="4">
-                <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+                <CFormLabel style={{ fontSize: "1.4rem" }}>Name EN:</CFormLabel>
                 <CFormInput
                   type="text"
-                  name="name"
-                  value={name}
-                  onChange={handleNameChange}
+                  value={nameEn}
+                  onChange={handleNameEnChange}
+                />
+              </CCol>
+              <CCol xs="12" sm="4">
+                <CFormLabel style={{ fontSize: "1.4rem" }}>Name AR:</CFormLabel>
+                <CFormInput
+                  type="text"
+                  value={nameAr}
+                  onChange={handleNameArChange}
                 />
               </CCol>
               <CCol xs="12" sm="4" className="d-grid">
@@ -123,9 +130,9 @@ function ScientificTitle() {
           tableData={tableData}
           mutable={true}
           removable={true}
-          deleteItemHook={deleteScientificTitle}
-          editRoute={"edit-scientific-title"}
-          tableCaption={"ScientificTitles"}
+          deleteItemHook={deleteBT}
+          editRoute={"edit-reject-reason"}
+          tableCaption={"Blood Types"}
         />
       </div>
     );
@@ -135,4 +142,4 @@ function ScientificTitle() {
   return content;
 }
 
-export default ScientificTitle;
+export default BloodTypes;

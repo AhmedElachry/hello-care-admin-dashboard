@@ -16,41 +16,53 @@ import {
 import NotFoundMessege from "../NotFoundMessege";
 import Loading from "../Loading";
 import Error from "../Error";
+import {
+  useGetRejectReasonsQuery,
+  useUpdateRejectReasonMutation,
+} from "../../../app/api/rejectReasonsApiSlice";
 
-function EditSDPage() {
-  const [name, setName] = useState("");
+function EditRRPage() {
+  const [nameEn, setNameEn] = useState("");
+  const [nameAr, setNameAr] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const {
-    data: sDegrees,
+    data: rReasons,
     isSuccess,
     isLoading,
     isError,
-  } = useGetScientificDegreesQuery();
+  } = useGetRejectReasonsQuery();
 
-  let selectedSDToUpdate;
+  let selectedRRToUpdate;
   if (isSuccess) {
-    const dataArr = sDegrees.data.slice();
-    selectedSDToUpdate = dataArr.find((item) => item.id == id);
+    const dataArr = rReasons.data.slice();
+    selectedRRToUpdate = dataArr.find((item) => item.id == id);
   }
   useEffect(() => {
-    if (isSuccess && selectedSDToUpdate) {
-      setName(selectedSDToUpdate.name);
+    if (isSuccess && selectedRRToUpdate) {
+      setNameEn(selectedRRToUpdate.name_en);
+      setNameAr(selectedRRToUpdate.name_ar);
     }
-  }, [isSuccess, selectedSDToUpdate]);
-  const [updateSD] = useUpdateScientificDegreeMutation();
+  }, [isSuccess, selectedRRToUpdate]);
+  const [updateRR] = useUpdateRejectReasonMutation();
 
-  const isFormValid = [name].every(Boolean);
+  const isFormValid = [nameEn, nameAr].every(Boolean);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleNameEnChange = (e) => {
+    setNameEn(e.target.value);
   };
-  let updatedSD = {
+
+  const handleNameArChange = (e) => {
+    setNameAr(e.target.value);
+  };
+
+  let updatedRR = {
     id,
-    name,
+    name_en: nameEn,
+    name_ar: nameAr,
   };
   const handleUpdateSD = () => {
-    updateSD(updatedSD)
+    updateRR(updatedRR)
       .unwrap()
       .then((payload) => {
         console.log(payload);
@@ -62,7 +74,7 @@ function EditSDPage() {
           progress: undefined,
           theme: "light",
         });
-        navigate("/management/scientific-degrees");
+        navigate("/management/reject-reasons");
       })
       .catch((error) => {
         toast.error(error.message, {
@@ -78,13 +90,13 @@ function EditSDPage() {
 
   let content;
 
-  if (!selectedSDToUpdate) {
+  if (!selectedRRToUpdate) {
     content = <NotFoundMessege />;
   } else if (isLoading) {
     content = <Loading />;
   } else if (isError) {
     content = <Error />;
-  } else if (isSuccess && selectedSDToUpdate) {
+  } else if (isSuccess && selectedRRToUpdate) {
     content = (
       <div>
         <CForm onSubmit={(e) => e.preventDefault()}>
@@ -93,8 +105,16 @@ function EditSDPage() {
               <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
               <CFormInput
                 type="text"
-                value={name}
-                onChange={handleNameChange}
+                value={nameEn}
+                onChange={handleNameEnChange}
+              />
+            </CCol>
+            <CCol xs="12" sm="4">
+              <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+              <CFormInput
+                type="text"
+                value={nameAr}
+                onChange={handleNameArChange}
               />
             </CCol>
             <CCol xs="12" sm="4" className="d-grid">
@@ -120,4 +140,4 @@ function EditSDPage() {
   return content;
 }
 
-export default EditSDPage;
+export default EditRRPage;

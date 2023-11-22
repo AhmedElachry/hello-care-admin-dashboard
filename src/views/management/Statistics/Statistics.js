@@ -12,7 +12,6 @@ function ContactUs() {
     content = <Error />;
   } else if (isSuccess) {
     tableData = data.data;
-    console.log(tableData);
     content = (
       <>
         <div>

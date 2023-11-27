@@ -1,35 +1,23 @@
 import { cilPen, cilTrash } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 function TableActions({ id, editRoute, deleteItemHook, removable }) {
   const navigate = useNavigate();
 
   const handleDeleteItem = (id) => {
-    deleteItemHook(id)
-      .unwrap()
-      .then((payload) => {
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      })
-      .catch((error) => {
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+    deleteItemHook(id);
+    toast.promise(deleteItemHook(id).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
+        return `${data.message}`;
+      },
+
+      error: (error) => {
+        return `${error.data.message}`;
+      },
+    });
   };
   return (
     <div className="d-flex justify-content-between ">

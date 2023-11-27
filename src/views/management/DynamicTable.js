@@ -1,6 +1,5 @@
 import { CTable, CTableCaption } from "@coreui/react";
 import TableActions from "./TableActions";
-import { ToastContainer } from "react-toastify";
 
 function DynamicTable({
   tableData,
@@ -38,7 +37,6 @@ function DynamicTable({
     const tableItem = {};
     columns.forEach((column) => {
       tableItem[column.key] = item[column.key];
-      // console.log(item.key);
       if (mutable) {
         tableItem.actions = (
           <TableActions
@@ -55,7 +53,6 @@ function DynamicTable({
   });
   return (
     <>
-      <ToastContainer />
       <CTable
         responsive={true}
         bordered

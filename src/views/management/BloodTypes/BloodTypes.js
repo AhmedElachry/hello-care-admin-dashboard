@@ -9,7 +9,7 @@ import {
   CButton,
   CCollapse,
 } from "@coreui/react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 import Loading from "../Loading";
 import Error from "../Error";
@@ -38,22 +38,20 @@ function BloodTypes() {
     let newBT = { name_en: nameEn, name_ar: nameAr };
     e.preventDefault();
     toast.promise(addBT(newBT).unwrap(), {
-      pending: "Pending",
-      success: {
-        render({ data }) {
-          setNameAr("");
-          setNameEn("");
-          return `${data.message}`;
-        },
+      loading: "Pending ...",
+      success: (data) => {
+        setVisible(!visible);
+        setNameAr("");
+        setNameEn("");
+        return `${data.message}`;
       },
-      error: {
-        render({ data }) {
-          return `${data.data.message}`;
-        },
+
+      error: (error) => {
+        return `${error.data.message}`;
       },
     });
   };
-  const isFormValid = Boolean(nameEn, nameAr);
+  const isFormValid = Boolean(nameEn && nameAr);
 
   let tableData = [];
   let content;

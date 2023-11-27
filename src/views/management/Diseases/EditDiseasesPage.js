@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -53,18 +53,13 @@ function EditDiseasesPage() {
   };
   const handleUpdateSD = () => {
     toast.promise(updateDisease(updatedDisease).unwrap(), {
-      pending: "Pending ...",
-      success: {
-        render({ data }) {
-          console.log(data);
-          navigate("/management/diseases");
-          return `${data.message}`;
-        },
+      loading: "Pending ...",
+      success: (data) => {
+        navigate("/management/diseases");
+        return `${data.message}`;
       },
-      error: {
-        render({ data }) {
-          return `${data.data.message}`;
-        },
+      error: (error) => {
+        return `${error.data.message}`;
       },
     });
   };

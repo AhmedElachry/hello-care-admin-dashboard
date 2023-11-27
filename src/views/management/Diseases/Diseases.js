@@ -9,7 +9,7 @@ import {
   CButton,
   CCollapse,
 } from "@coreui/react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 import Loading from "../Loading";
 import Error from "../Error";
@@ -36,21 +36,18 @@ function Diseases() {
 
   const handleSubmit = (e) => {
     let newDisease = { name_en: nameEn, name_ar: nameAr };
-    e.preventDefault();
+
     toast.promise(addDisease(newDisease).unwrap(), {
-      pending: "Pending",
-      success: {
-        render({ data }) {
-          setVisible(!visible);
-          setNameAr("");
-          setNameEn("");
-          return `${data.message}`;
-        },
+      loading: "Pending ...",
+      success: (data) => {
+        setVisible(!visible);
+        setNameEn("");
+        setNameAr("");
+        return `${data.message}`;
       },
-      error: {
-        render({ data }) {
-          return `${data.data.message}`;
-        },
+
+      error: (error) => {
+        return `${error.data.message}`;
       },
     });
   };

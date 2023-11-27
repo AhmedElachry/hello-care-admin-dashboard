@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+
+import toast from "react-hot-toast";
+
 import {
   CForm,
   CFormInput,
@@ -51,30 +53,16 @@ function EditVisitPage() {
     max_price: maxPrice,
   };
   const handleUpdateST = () => {
-    console.log(updatedVisit);
-    updateVisit(updatedVisit)
-      .unwrap()
-      .then((payload) => {
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
+    toast.promise(updateVisit(updatedVisit).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
         navigate("/management/visits");
-      })
-      .catch((error) => {
-        toast.error(error.data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+        return `${data.message}`;
+      },
+      error: (error) => {
+        return `${error.data.message}`;
+      },
+    });
   };
 
   let content;

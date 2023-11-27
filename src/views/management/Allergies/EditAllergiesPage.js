@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -54,19 +56,16 @@ function EditAllergiesPage() {
       name_ar: nameAr,
     };
     toast.promise(updateAllergie(updatedAllergie).unwrap(), {
-      pending: "Pending ...",
-      success: {
-        render({ data }) {
-          console.log(data);
-          navigate("/management/allergies");
-          return `${data.message}`;
-        },
+      loading: "Pending ...",
+      success: (data) => {
+        console.log(data);
+        navigate("/management/allergies");
+        return `${data.message}`;
       },
-      error: {
-        render({ data }) {
-          console.log(data);
-          return `${data.data.message}`;
-        },
+
+      error: (error) => {
+        console.log(error);
+        return `${error.data.message}`;
       },
     });
   };
@@ -85,7 +84,7 @@ function EditAllergiesPage() {
         <CForm onSubmit={(e) => e.preventDefault()}>
           <CRow>
             <CCol xs="12" sm="4">
-              <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+              <CFormLabel style={{ fontSize: "1.4rem" }}>Name EN:</CFormLabel>
               <CFormInput
                 type="text"
                 value={nameEn}
@@ -93,7 +92,7 @@ function EditAllergiesPage() {
               />
             </CCol>
             <CCol xs="12" sm="4">
-              <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+              <CFormLabel style={{ fontSize: "1.4rem" }}>Name AR:</CFormLabel>
               <CFormInput
                 type="text"
                 value={nameAr}

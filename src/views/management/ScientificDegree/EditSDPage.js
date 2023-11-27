@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+
 import {
   useGetScientificDegreesQuery,
   useUpdateScientificDegreeMutation,
 } from "../../../app/api/ScientificDegreeApiSlice";
-import { toast } from "react-toastify";
+
+import toast from "react-hot-toast";
+
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -13,6 +16,7 @@ import {
   CCol,
   CButton,
 } from "@coreui/react";
+
 import NotFoundMessege from "../NotFoundMessege";
 import Loading from "../Loading";
 import Error from "../Error";
@@ -50,37 +54,21 @@ function EditSDPage() {
     name,
   };
   const handleUpdateSD = () => {
-    updateSD(updatedSD)
-      .unwrap()
-      .then((payload) => {
-        console.log(payload);
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
+    toast.promise(updateSD(updatedSD).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
         navigate("/management/scientific-degrees");
-      })
-      .catch((error) => {
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+        return `${data.message}`;
+      },
+      error: (error) => {
+        return `${error.data.message}`;
+      },
+    });
   };
 
   let content;
 
-  if (!selectedSDToUpdate) {
-    content = <NotFoundMessege />;
-  } else if (isLoading) {
+  if (isLoading) {
     content = <Loading />;
   } else if (isError) {
     content = <Error />;
@@ -116,6 +104,9 @@ function EditSDPage() {
         </CForm>
       </div>
     );
+  }
+  if (!selectedSDToUpdate) {
+    content = <NotFoundMessege />;
   }
   return content;
 }

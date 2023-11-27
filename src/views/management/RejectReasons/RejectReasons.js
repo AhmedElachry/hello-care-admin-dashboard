@@ -9,7 +9,7 @@ import {
   CButton,
   CCollapse,
 } from "@coreui/react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import {
   useGetRejectReasonsQuery,
   useAddRejectReasonMutation,
@@ -39,36 +39,23 @@ function RejectReasons() {
     setNameAr(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     let newRR = { name_en: nameEn, name_ar: nameAr };
-    e.preventDefault();
-    addRR(newRR)
-      .unwrap()
-      .then((payload) => {
+    toast.promise(addRR(newRR).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
+        setVisible(!visible);
         setNameEn("");
         setNameAr("");
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      })
-      .catch((error) => {
-        console.error("rejected", error);
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+        return `${data.message}`;
+      },
+
+      error: (error) => {
+        return `${error.data.message}`;
+      },
+    });
   };
-  const isFormValid = Boolean(nameEn, nameAr);
+  const isFormValid = Boolean(nameEn && nameAr);
 
   let tableData = [];
   let content;

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  useGetScientificDegreesQuery,
-  useUpdateScientificDegreeMutation,
-} from "../../../app/api/ScientificDegreeApiSlice";
-import { toast } from "react-toastify";
+
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -62,30 +59,16 @@ function EditRRPage() {
     name_ar: nameAr,
   };
   const handleUpdateSD = () => {
-    updateRR(updatedRR)
-      .unwrap()
-      .then((payload) => {
-        console.log(payload);
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
+    toast.promise(updateRR(updatedRR).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
         navigate("/management/reject-reasons");
-      })
-      .catch((error) => {
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+        return `${data.message}`;
+      },
+      error: (error) => {
+        return `${error.data.message}`;
+      },
+    });
   };
 
   let content;

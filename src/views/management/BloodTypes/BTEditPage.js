@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -42,7 +42,7 @@ function BTEditPage() {
   }, [isSuccess, selectedBTToUpdate]);
   const [updateBT] = useUpdateBloodTypeMutation();
 
-  const isFormValid = [].every(Boolean);
+  const isFormValid = [nameEn, nameAr].every(Boolean);
 
   const handleNameEnChange = (e) => {
     setNameEn(e.target.value);
@@ -59,18 +59,13 @@ function BTEditPage() {
   };
   const handleUpdateSD = () => {
     toast.promise(updateBT(updatedBT).unwrap(), {
-      pending: "Pending ...",
-      success: {
-        render({ data }) {
-          console.log(data);
-          navigate("/management/blood-types");
-          return `${data.message}`;
-        },
+      loading: "Pending ...",
+      success: (data) => {
+        navigate("/management/blood-types");
+        return `${data.message}`;
       },
-      error: {
-        render({ data }) {
-          return `${data.data.message}`;
-        },
+      error: (error) => {
+        return `${error.data.message}`;
       },
     });
   };

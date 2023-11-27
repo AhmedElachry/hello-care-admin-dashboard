@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -50,30 +50,17 @@ function EditSDPage() {
     name,
   };
   const handleUpdateST = () => {
-    updateST(updatedST)
-      .unwrap()
-      .then((payload) => {
-        console.log(payload);
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
+    updateST(updatedST);
+    toast.promise(updateST(updatedST).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
         navigate("/management/scientific-title");
-      })
-      .catch((error) => {
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+        return `${data.message}`;
+      },
+      error: (error) => {
+        return `${error.data.message}`;
+      },
+    });
   };
 
   let content;

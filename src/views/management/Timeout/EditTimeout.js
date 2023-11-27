@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -50,32 +50,17 @@ function EditTimeout() {
     value,
   };
   const handleUpdateTimeout = () => {
-    console.log(updatedValue);
-    updateTimeout(updatedValue)
-      .unwrap()
-      .then((payload) => {
-        console.log(payload);
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
+    toast.promise(updateTimeout(updatedValue).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
         navigate("/management/timeouts");
-      })
-      .catch((error) => {
+        return `${data.message}`;
+      },
+      error: (error) => {
         console.log(error);
-        toast.error(error.data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+        return `${error.data.message}`;
+      },
+    });
   };
 
   let content;

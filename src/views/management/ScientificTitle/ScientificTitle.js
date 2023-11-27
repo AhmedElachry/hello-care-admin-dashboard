@@ -9,7 +9,7 @@ import {
   CButton,
   CCollapse,
 } from "@coreui/react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 import Loading from "../Loading";
 import Error from "../Error";
@@ -40,31 +40,21 @@ function ScientificTitle() {
     let newST = {
       name,
     };
-    e.preventDefault();
-    addST(newST)
-      .unwrap()
-      .then((payload) => {
+
+    toast.promise(addST(newST).unwrap(), {
+      loading: "Pending ...",
+      success: (data) => {
+        console.log(data);
+        setVisible(!visible);
         setName("");
-        toast.success(payload.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      })
-      .catch((error) => {
-        console.error("rejected", error);
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 3000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
+        return `${data.message}`;
+      },
+
+      error: (error) => {
+        console.log(error);
+        return `${error.data.message}`;
+      },
+    });
   };
   const isFormValid = Boolean(name);
 

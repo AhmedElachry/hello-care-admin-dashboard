@@ -1,5 +1,4 @@
 import React from "react";
-// import BloodTypes from "./views/management/BloodTypes/BloodTypes";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 
@@ -50,6 +49,22 @@ const EditRRPage = React.lazy(() =>
 
 const BloodTypes = React.lazy(() =>
   import("./views/management/BloodTypes/BloodTypes")
+);
+const EditBloodTypes = React.lazy(() =>
+  import("./views/management/BloodTypes/BTEditPage")
+);
+const Diseases = React.lazy(() =>
+  import("./views/management/Diseases/Diseases")
+);
+const EditDiseases = React.lazy(() =>
+  import("./views/management/Diseases/EditDiseasesPage")
+);
+
+const Allergies = React.lazy(() =>
+  import("./views/management/Allergies/Allergies")
+);
+const EditAllergie = React.lazy(() =>
+  import("./views/management/Allergies/EditAllergiesPage")
 );
 
 const routes = [
@@ -139,6 +154,31 @@ const routes = [
     path: "/management/blood-types",
     name: "Blood Types",
     element: BloodTypes,
+  },
+  {
+    path: "/management/edit-blood-type/:id",
+    name: "Edit Blood Types",
+    element: EditBloodTypes,
+  },
+  {
+    path: "/management/diseases",
+    name: "Diseases",
+    element: Diseases,
+  },
+  {
+    path: "/management/edit-disease/:id",
+    name: "Edit Disease",
+    element: EditDiseases,
+  },
+  {
+    path: "/management/allergies",
+    name: "Allergies",
+    element: Allergies,
+  },
+  {
+    path: "/management/edit-allergie/:id",
+    name: "Edit Allergie",
+    element: EditAllergie,
   },
 ];
 

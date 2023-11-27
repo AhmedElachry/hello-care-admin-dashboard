@@ -12,6 +12,8 @@ import contactUsApiSlice from "./api/contactUSApiSlice";
 import statisticsApiSlice from "./api/statisticsApiSlice";
 import rejectReasonsApiSlice from "./api/rejectReasonsApiSlice";
 import bloodTypesApiSlice from "./api/bloodTypesApiSlice";
+import diseasesApiSlice from "./api/diseasesApiSlice";
+import allergiesApiSlice from "./api/allergiesApiSlice";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +28,8 @@ const store = configureStore({
     [statisticsApiSlice.reducerPath]: statisticsApiSlice.reducer,
     [rejectReasonsApiSlice.reducerPath]: rejectReasonsApiSlice.reducer,
     [bloodTypesApiSlice.reducerPath]: bloodTypesApiSlice.reducer,
+    [diseasesApiSlice.reducerPath]: diseasesApiSlice.reducer,
+    [allergiesApiSlice.reducerPath]: allergiesApiSlice.reducer,
     sidebar: sidebarReducer,
     auth: authReducer,
   },
@@ -41,6 +45,8 @@ const store = configureStore({
       .concat(statisticsApiSlice.middleware)
       .concat(rejectReasonsApiSlice.middleware)
       .concat(bloodTypesApiSlice.middleware)
+      .concat(diseasesApiSlice.middleware)
+      .concat(allergiesApiSlice.middleware)
       .concat(authApi.middleware),
   devTools: true,
 });

@@ -13,19 +13,18 @@ import { toast } from "react-toastify";
 
 import Loading from "../Loading";
 import Error from "../Error";
-
 import {
-  useAddBloodTypeMutation,
-  useDeleteBloodTypeMutation,
-  useGetBloodTypesQuery,
-} from "../../../app/api/bloodTypesApiSlice";
-function BloodTypes() {
+  useAddAllergieMutation,
+  useDeleteAllergieMutation,
+  useGetAllergiesQuery,
+} from "../../../app/api/allergiesApiSlice";
+function allergies() {
   const [nameEn, setNameEn] = useState("");
   const [nameAr, setNameAr] = useState("");
   const [visible, setVisible] = useState(false);
-  const { data: data, isSuccess, isError, isLoading } = useGetBloodTypesQuery();
-  const [deleteBT] = useDeleteBloodTypeMutation();
-  const [addBT] = useAddBloodTypeMutation();
+  const { data: data, isSuccess, isError, isLoading } = useGetAllergiesQuery();
+  const [deleteAllergie] = useDeleteAllergieMutation();
+  const [addAllergie] = useAddAllergieMutation();
 
   const handleNameEnChange = (e) => {
     setNameEn(e.target.value);
@@ -35,12 +34,13 @@ function BloodTypes() {
   };
 
   const handleSubmit = (e) => {
-    let newBT = { name_en: nameEn, name_ar: nameAr };
+    let newAllergie = { name_en: nameEn, name_ar: nameAr };
     e.preventDefault();
-    toast.promise(addBT(newBT).unwrap(), {
+    toast.promise(addAllergie(newAllergie).unwrap(), {
       pending: "Pending",
       success: {
         render({ data }) {
+          setVisible(!visible);
           setNameAr("");
           setNameEn("");
           return `${data.message}`;
@@ -53,7 +53,7 @@ function BloodTypes() {
       },
     });
   };
-  const isFormValid = Boolean(nameEn, nameAr);
+  const isFormValid = Boolean(nameEn && nameAr);
 
   let tableData = [];
   let content;
@@ -117,9 +117,9 @@ function BloodTypes() {
           tableData={tableData}
           mutable={true}
           removable={true}
-          deleteItemHook={deleteBT}
-          editRoute={"edit-blood-type"}
-          tableCaption={"Blood Types"}
+          deleteItemHook={deleteAllergie}
+          editRoute={"edit-allergie"}
+          tableCaption={"Allergies"}
         />
       </div>
     );
@@ -129,4 +129,4 @@ function BloodTypes() {
   return content;
 }
 
-export default BloodTypes;
+export default allergies;

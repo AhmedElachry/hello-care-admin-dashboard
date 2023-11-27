@@ -5,7 +5,7 @@ import {
   cilSpeedometer,
   cilContact,
   cilBarChart,
-  cilAvTimer,
+  cilAlarm,
   cilDrop,
   cilEducation,
   cilSend,
@@ -13,8 +13,12 @@ import {
   cilHospital,
   cilWallet,
   cilTruck,
-  cilFilterX,
+  cilBan,
   cilCarAlt,
+  cilBug,
+  cilBadge,
+  cilAnimal,
+  cilTags,
 } from "@coreui/icons";
 import { CNavItem, CNavTitle } from "@coreui/react";
 
@@ -33,7 +37,7 @@ const _nav = [
     component: CNavItem,
     name: "Visits",
     to: "/management/visits",
-    icon: <CIcon icon={cilCarAlt} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
@@ -45,19 +49,19 @@ const _nav = [
     component: CNavItem,
     name: "Scientific Title",
     to: "/management/scientific-title",
-    icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBadge} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "Timeouts",
     to: "/management/timeouts",
-    icon: <CIcon icon={cilAvTimer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilAlarm} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "Orders",
     to: "/management/orders",
-    icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilTags} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
@@ -81,13 +85,25 @@ const _nav = [
     component: CNavItem,
     name: "Reject Reasons",
     to: "/management/reject-reasons",
-    icon: <CIcon icon={cilFilterX} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBan} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "Blood Types",
     to: "/management/blood-types",
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Diseases",
+    to: "/management/diseases",
+    icon: <CIcon icon={cilBug} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Allergies",
+    to: "/management/allergies",
+    icon: <CIcon icon={cilAnimal} customClassName="nav-icon" />,
   },
 ];
 

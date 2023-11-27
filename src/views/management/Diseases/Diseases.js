@@ -13,19 +13,19 @@ import { toast } from "react-toastify";
 
 import Loading from "../Loading";
 import Error from "../Error";
-
 import {
-  useAddBloodTypeMutation,
-  useDeleteBloodTypeMutation,
-  useGetBloodTypesQuery,
-} from "../../../app/api/bloodTypesApiSlice";
-function BloodTypes() {
+  useAddDiseaseMutation,
+  useDeleteDiseaseMutation,
+  useGetDiseasesQuery,
+} from "../../../app/api/diseasesApiSlice";
+
+function Diseases() {
   const [nameEn, setNameEn] = useState("");
   const [nameAr, setNameAr] = useState("");
   const [visible, setVisible] = useState(false);
-  const { data: data, isSuccess, isError, isLoading } = useGetBloodTypesQuery();
-  const [deleteBT] = useDeleteBloodTypeMutation();
-  const [addBT] = useAddBloodTypeMutation();
+  const { data: data, isSuccess, isError, isLoading } = useGetDiseasesQuery();
+  const [deleteDisease] = useDeleteDiseaseMutation();
+  const [addDisease] = useAddDiseaseMutation();
 
   const handleNameEnChange = (e) => {
     setNameEn(e.target.value);
@@ -35,12 +35,13 @@ function BloodTypes() {
   };
 
   const handleSubmit = (e) => {
-    let newBT = { name_en: nameEn, name_ar: nameAr };
+    let newDisease = { name_en: nameEn, name_ar: nameAr };
     e.preventDefault();
-    toast.promise(addBT(newBT).unwrap(), {
+    toast.promise(addDisease(newDisease).unwrap(), {
       pending: "Pending",
       success: {
         render({ data }) {
+          setVisible(!visible);
           setNameAr("");
           setNameEn("");
           return `${data.message}`;
@@ -53,7 +54,7 @@ function BloodTypes() {
       },
     });
   };
-  const isFormValid = Boolean(nameEn, nameAr);
+  const isFormValid = Boolean(nameEn && nameAr);
 
   let tableData = [];
   let content;
@@ -117,9 +118,9 @@ function BloodTypes() {
           tableData={tableData}
           mutable={true}
           removable={true}
-          deleteItemHook={deleteBT}
-          editRoute={"edit-blood-type"}
-          tableCaption={"Blood Types"}
+          deleteItemHook={deleteDisease}
+          editRoute={"edit-disease"}
+          tableCaption={"Diseases"}
         />
       </div>
     );
@@ -129,4 +130,4 @@ function BloodTypes() {
   return content;
 }
 
-export default BloodTypes;
+export default Diseases;

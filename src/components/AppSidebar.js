@@ -11,6 +11,7 @@ import {
 
 import { AppSidebarNav } from "./AppSidebarNav";
 import { setSidebarUnfoldable } from "../features/sidebarSlice/sidebarSlice";
+import logo from "../assets/brand/whiteLogo.png";
 
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
@@ -24,16 +25,8 @@ const AppSidebar = () => {
   return (
     <CSidebar position="fixed" unfoldable={unfoldable} visible={sidebarShow}>
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <CImage
-          className="sidebar-brand-full"
-          src="https://appssquare.com/_next/static/media/appssquare-logo.cba430ba.svg"
-          height={50}
-        />
-        <CImage
-          className="sidebar-brand-narrow"
-          src="https://appssquare.com/_next/static/media/appssquare-logo.cba430ba.svg"
-          height={50}
-        />
+        <CImage className="sidebar-brand-full" src={logo} height={50} />
+        <CImage className="sidebar-brand-narrow" src={logo} height={50} />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

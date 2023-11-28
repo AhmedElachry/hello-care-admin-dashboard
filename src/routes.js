@@ -63,8 +63,15 @@ const EditDiseases = React.lazy(() =>
 const Allergies = React.lazy(() =>
   import("./views/management/Allergies/Allergies")
 );
-const EditAllergie = React.lazy(() =>
+const EditAllergies = React.lazy(() =>
   import("./views/management/Allergies/EditAllergiesPage")
+);
+
+const Surgeries = React.lazy(() =>
+  import("./views/management/Surgeries/Surgeries")
+);
+const EditSurgeries = React.lazy(() =>
+  import("./views/management/Surgeries/EditSurgeriesPage")
 );
 
 const routes = [
@@ -176,9 +183,19 @@ const routes = [
     element: Allergies,
   },
   {
-    path: "/management/edit-allergie/:id",
-    name: "Edit Allergie",
-    element: EditAllergie,
+    path: "/management/edit-allergy/:id",
+    name: "Edit Allergy",
+    element: EditAllergies,
+  },
+  {
+    path: "/management/surgeries",
+    name: "Surgeries",
+    element: Surgeries,
+  },
+  {
+    path: "/management/edit-surgery/:id",
+    name: "Edit Surgery",
+    element: EditSurgeries,
   },
 ];
 

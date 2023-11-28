@@ -85,7 +85,7 @@ function EditRRPage() {
         <CForm onSubmit={(e) => e.preventDefault()}>
           <CRow>
             <CCol xs="12" sm="4">
-              <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+              <CFormLabel style={{ fontSize: "1.4rem" }}>Name EN:</CFormLabel>
               <CFormInput
                 type="text"
                 value={nameEn}
@@ -93,7 +93,7 @@ function EditRRPage() {
               />
             </CCol>
             <CCol xs="12" sm="4">
-              <CFormLabel style={{ fontSize: "1.4rem" }}>Name:</CFormLabel>
+              <CFormLabel style={{ fontSize: "1.4rem" }}>Name AR:</CFormLabel>
               <CFormInput
                 type="text"
                 value={nameAr}

@@ -19,6 +19,7 @@ import {
   cilBadge,
   cilAnimal,
   cilTags,
+  cilMedicalCross,
 } from "@coreui/icons";
 import { CNavItem, CNavTitle } from "@coreui/react";
 
@@ -104,6 +105,12 @@ const _nav = [
     name: "Allergies",
     to: "/management/allergies",
     icon: <CIcon icon={cilAnimal} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Surgeries",
+    to: "/management/Surgeries",
+    icon: <CIcon icon={cilMedicalCross} customClassName="nav-icon" />,
   },
 ];
 

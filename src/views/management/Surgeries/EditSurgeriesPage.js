@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,31 +14,30 @@ import NotFoundMessege from "../NotFoundMessege";
 import Loading from "../Loading";
 import Error from "../Error";
 import {
-  useGetAllergiesQuery,
-  useUpdateAllergyMutation,
-} from "../../../app/api/allergiesApiSlice";
-
-function EditAllergiesPage() {
+  useGetSurgeriesQuery,
+  useUpdateSurgeryMutation,
+} from "../../../app/api/surgeriesApiSlice";
+function EditSurgeriesPage() {
   const [nameEn, setNameEn] = useState("");
   const [nameAr, setNameAr] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: data, isSuccess, isLoading, isError } = useGetAllergiesQuery();
+  const { data: data, isSuccess, isLoading, isError } = useGetSurgeriesQuery();
 
-  let selectedAllergyToUpdate;
+  let selectedSurgeryToUpdate;
   if (isSuccess) {
     const dataArr = data.data.slice();
-    selectedAllergyToUpdate = dataArr.find((item) => item.id == id);
+    selectedSurgeryToUpdate = dataArr.find((item) => item.id == id);
   }
   useEffect(() => {
-    if (isSuccess && selectedAllergyToUpdate) {
-      setNameEn(selectedAllergyToUpdate.name_en);
-      setNameAr(selectedAllergyToUpdate.name_ar);
+    if (isSuccess && selectedSurgeryToUpdate) {
+      setNameEn(selectedSurgeryToUpdate.name_en);
+      setNameAr(selectedSurgeryToUpdate.name_ar);
     }
-  }, [isSuccess, selectedAllergyToUpdate]);
-  const [updateAllergy] = useUpdateAllergyMutation();
+  }, [isSuccess, selectedSurgeryToUpdate]);
+  const [updateSurgery] = useUpdateSurgeryMutation();
 
-  const isFormValid = Boolean(nameAr && nameEn);
+  const isFormValid = Boolean(nameAr);
 
   const handleNameEnChange = (e) => {
     setNameEn(e.target.value);
@@ -49,15 +48,15 @@ function EditAllergiesPage() {
   };
 
   const handleUpdateSD = () => {
-    let updatedAllergy = {
+    let updatedSurgery = {
       id,
       name_en: nameEn,
       name_ar: nameAr,
     };
-    toast.promise(updateAllergy(updatedAllergy).unwrap(), {
+    toast.promise(updateSurgery(updatedSurgery).unwrap(), {
       loading: "Pending ...",
       success: (data) => {
-        navigate("/management/allergies");
+        navigate("/management/surgeries");
         return `${data.message}`;
       },
 
@@ -71,11 +70,11 @@ function EditAllergiesPage() {
 
   if (isLoading) {
     content = <Loading />;
-  } else if (!selectedAllergyToUpdate) {
+  } else if (!selectedSurgeryToUpdate) {
     content = <NotFoundMessege />;
   } else if (isError) {
     content = <Error />;
-  } else if (isSuccess && selectedAllergyToUpdate) {
+  } else if (isSuccess && selectedSurgeryToUpdate) {
     content = (
       <div>
         <CForm onSubmit={(e) => e.preventDefault()}>
@@ -119,4 +118,4 @@ function EditAllergiesPage() {
   return content;
 }
 
-export default EditAllergiesPage;
+export default EditSurgeriesPage;

@@ -7,7 +7,6 @@ function TableActions({ id, editRoute, deleteItemHook, removable }) {
   const navigate = useNavigate();
 
   const handleDeleteItem = (id) => {
-    deleteItemHook(id);
     toast.promise(deleteItemHook(id).unwrap(), {
       loading: "Pending ...",
       success: (data) => {

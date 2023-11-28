@@ -27,12 +27,14 @@ import { useDispatch } from "react-redux";
 import { removeToken } from "../../features/auth/authSlice";
 import { logoutSuccess } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../../app/api/logoutApiSlice";
 
 const AppHeaderDropdown = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [logout] = useLogoutMutation();
   const onLogoutClick = () => {
+    logout();
     dispatch(removeToken());
     dispatch(logoutSuccess);
     navigate("/login-admin", { replace: true });

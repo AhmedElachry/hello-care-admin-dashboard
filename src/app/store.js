@@ -14,10 +14,13 @@ import rejectReasonsApiSlice from "./api/rejectReasonsApiSlice";
 import bloodTypesApiSlice from "./api/bloodTypesApiSlice";
 import diseasesApiSlice from "./api/diseasesApiSlice";
 import allergiesApiSlice from "./api/allergiesApiSlice";
+import surgeriesApiSlice from "./api/surgeriesApiSlice";
+import { logoutApiSlice } from "./api/logoutApiSlice";
 
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
+    [logoutApiSlice.reducerPath]: logoutApiSlice.reducer,
     [visitsApiSlice.reducerPath]: visitsApiSlice.reducer,
     [ScientificDegreeApiSlice.reducerPath]: ScientificDegreeApiSlice.reducer,
     [scientificTitleApiSlice.reducerPath]: scientificTitleApiSlice.reducer,
@@ -30,6 +33,7 @@ const store = configureStore({
     [bloodTypesApiSlice.reducerPath]: bloodTypesApiSlice.reducer,
     [diseasesApiSlice.reducerPath]: diseasesApiSlice.reducer,
     [allergiesApiSlice.reducerPath]: allergiesApiSlice.reducer,
+    [surgeriesApiSlice.reducerPath]: surgeriesApiSlice.reducer,
     sidebar: sidebarReducer,
     auth: authReducer,
   },
@@ -47,7 +51,9 @@ const store = configureStore({
       .concat(bloodTypesApiSlice.middleware)
       .concat(diseasesApiSlice.middleware)
       .concat(allergiesApiSlice.middleware)
-      .concat(authApi.middleware),
+      .concat(surgeriesApiSlice.middleware)
+      .concat(authApi.middleware)
+      .concat(logoutApiSlice.middleware),
   devTools: true,
 });
 

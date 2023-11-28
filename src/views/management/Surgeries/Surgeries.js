@@ -14,17 +14,17 @@ import toast from "react-hot-toast";
 import Loading from "../Loading";
 import Error from "../Error";
 import {
-  useAddAllergyMutation,
-  useDeleteAllergyMutation,
-  useGetAllergiesQuery,
-} from "../../../app/api/allergiesApiSlice";
-function allergies() {
+  useAddSurgeryMutation,
+  useDeleteSurgeryMutation,
+  useGetSurgeriesQuery,
+} from "../../../app/api/surgeriesApiSlice";
+function Surgeries() {
   const [nameEn, setNameEn] = useState("");
   const [nameAr, setNameAr] = useState("");
   const [visible, setVisible] = useState(false);
-  const { data: data, isSuccess, isError, isLoading } = useGetAllergiesQuery();
-  const [deleteAllergy] = useDeleteAllergyMutation();
-  const [addAllergy] = useAddAllergyMutation();
+  const { data: data, isSuccess, isError, isLoading } = useGetSurgeriesQuery();
+  const [deleteSurgery] = useDeleteSurgeryMutation();
+  const [addSurgery] = useAddSurgeryMutation();
 
   const handleNameEnChange = (e) => {
     setNameEn(e.target.value);
@@ -34,9 +34,9 @@ function allergies() {
   };
 
   const handleSubmit = (e) => {
-    let newAllergy = { name_en: nameEn, name_ar: nameAr };
+    let newSurgery = { name_en: nameEn, name_ar: nameAr };
     e.preventDefault();
-    toast.promise(addAllergy(newAllergy).unwrap(), {
+    toast.promise(addSurgery(newSurgery).unwrap(), {
       loading: "Pending ...",
       success: (data) => {
         setVisible(!visible);
@@ -114,9 +114,9 @@ function allergies() {
           tableData={tableData}
           mutable={true}
           removable={true}
-          deleteItemHook={deleteAllergy}
-          editRoute={"edit-Allergy"}
-          tableCaption={"Allergies"}
+          deleteItemHook={deleteSurgery}
+          editRoute={"edit-Surgery"}
+          tableCaption={"Surgeries"}
         />
       </div>
     );
@@ -126,4 +126,4 @@ function allergies() {
   return content;
 }
 
-export default allergies;
+export default Surgeries;

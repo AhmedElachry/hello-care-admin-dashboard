@@ -17,23 +17,23 @@ const allergiesApiSlice = createApi({
       query: () => "allergies",
       providesTags: ["Allergies"],
     }),
-    addAllergie: builder.mutation({
-      query: (allergie) => ({
+    addAllergy: builder.mutation({
+      query: (allergy) => ({
         url: "allergies",
         method: "POST",
-        body: allergie,
+        body: allergy,
       }),
       invalidatesTags: ["Allergies"],
     }),
-    updateAllergie: builder.mutation({
-      query: (allergie) => ({
-        url: `allergies/${allergie.id}`,
+    updateAllergy: builder.mutation({
+      query: (allergy) => ({
+        url: `allergies/${allergy.id}`,
         method: "PUT",
-        body: allergie,
+        body: allergy,
       }),
       invalidatesTags: ["Allergies"],
     }),
-    deleteAllergie: builder.mutation({
+    deleteAllergy: builder.mutation({
       query: ({ id }) => ({
         url: `allergies/${id}`,
         method: "DELETE",
@@ -46,8 +46,8 @@ const allergiesApiSlice = createApi({
 
 export const {
   useGetAllergiesQuery,
-  useAddAllergieMutation,
-  useUpdateAllergieMutation,
-  useDeleteAllergieMutation,
+  useAddAllergyMutation,
+  useUpdateAllergyMutation,
+  useDeleteAllergyMutation,
 } = allergiesApiSlice;
 export default allergiesApiSlice;
